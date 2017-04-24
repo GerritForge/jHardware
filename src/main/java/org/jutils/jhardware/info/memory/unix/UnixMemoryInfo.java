@@ -15,10 +15,10 @@ package org.jutils.jhardware.info.memory.unix;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Stream;
 import org.jutils.jhardware.info.memory.AbstractMemoryInfo;
 import org.jutils.jhardware.util.HardwareInfoUtils;
 
+import java.util.List;
 /**
  * Information related to Memory
  * 
@@ -28,12 +28,12 @@ public final class UnixMemoryInfo extends AbstractMemoryInfo {
     private static final String MEMINFO = "/proc/meminfo";
     
     private static String getMemoryData(){
-        Stream<String> streamMemoryInfo = HardwareInfoUtils.readFile(MEMINFO);
+        List<String> streamMemoryInfo = HardwareInfoUtils.readFile(MEMINFO);
         final StringBuilder buffer = new StringBuilder();
-        
-        streamMemoryInfo.forEach((String line) -> 
-            buffer.append(line).append("\r\n")
-        );
+
+        for (String line: streamMemoryInfo) {
+            buffer.append(line).append("\r\n");
+        }
         
         return buffer.toString();
     }
